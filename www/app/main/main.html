@@ -4,73 +4,110 @@
   <div class="container">
     <h1>Smokey Bay Air Online Reservations for Seldovia, Port Graham, or Nanwalek</h1>
     <h1>Please <a href="/login" class="login">login</a> or <a href="/signup" class="login">signup</a> to use this App</h1>
-    <img src="assets/images/Bear Paw.jpg" alt="I'm Yeoman">
+    <img class="bear" src="assets/images/Bear Paw.jpg" alt="I'm Yeoman">
   </div>
  </header>
 </div>
 <div class="container" ng-show="main.isLoggedIn()">
     <h1>Enter or Update Reservation Here</h1>
     <a href='#' ng-click="main.showHelp()">Need help?</a>
+    <div class="row">
+      <div class="col-md-3">
+        <table class="table">
+          <thead>
+            <th>First Name*</th>         
+            <th>Last Name*</th>
+          </thead>
+          <tbody>
+            <tr>
+              <td><input class="form-control" ng-model="main.newRes.FIRST"></td>
+              <td><input class="form-control" ng-model="main.newRes.LAST"></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="col-md-3">
+        <table class="table">
+          <thead>
+            <th>Body Weight*</th>
+            <th>Bag Weight</th>
+            <th>Depart/Arrive*</th>
+          </thead>
+          <tbody>
+            <tr>
+              <td>
+                <form name="myForm">
+                    <input class="form-control" name="input" ng-model="main.newRes.WEIGHT" type="number" min="0" >
+                    <div role="alert">
+                     <span class="error" ng-show="myForm.input.$error.number">
+                        Please enter a valid integer</span>
+                    </div>
+                </form>
+              </td>
+              <td>
+                <form name="myForm1">
+                  <input class="form-control" name="input1" ng-model="main.newRes.FWeight" ng-blur=main.overWeight() type="number" min="0">
+                  <div role="alert">
+                     <span class="error" ng-show="myForm1.input1.$error.number">
+                        Please enter a valid integer</span>
+                  </div>
+                </form>
+              </td>
+              <td>
+                <ui-select class="mainselectize" ng-model="main.code.selected" theme="selectize" ng-disabled="disabled" ng-change="main.makeList()">
+                  <ui-select-match placeholder="Choose...">{{$select.selected.name}}</ui-select-match>
+                  <ui-select-choices repeat="tc in main.travelCodes" >
+                    <div ng-bind-html="tc.name | highlight: $select.search"></div>
+                  </ui-select-choices>
+                </ui-select>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div> 
+      <div class="col-md-3">
+        <table class="table">
+          <thead>
+            <th>Date*</th>
+            <th>DepartureTime*</th>
+            <th>&nbsp;</th>
+          </thead>
+          <tbody>
+            <tr>
+              <td>
+                <datepicker date-format="EEEE MMM d, yyyy" date-min-limit="{{main.currDate}}" date-disabled-dates="{{main.disabledDates}}">
+                  <input class="form-control" ng-model="main.newRes['DATE TO FLY']" ng-change="main.makeList()" type="text"/>
+                </datepicker>
+              </td>
+              <td>
+                <ui-select class="mainselectize" ng-model="main.smfltnum.selected" theme="selectize" ng-disabled="disabled" >
+                  <ui-select-match placeholder="Choose...">{{$select.selected.time}}</ui-select-match>
+                  <ui-select-choices repeat="tm in main.timeList" >
+                    <div ng-bind-html="tm.time | highlight: $select.search"></div>
+                  </ui-select-choices>
+                </ui-select>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div> 
+      <div class="col-md-3">
+        <table class="table">
+          <thead>
+            <th></th>         
+            <th></th>
+          </thead>
+          <tbody>
+            <tr>
+              <td><button class="btn btn-primary" ng-click="main.addRes()">Add/Update</button></td>
+              <td><button class="btn btn-danger" ng-click="main.cancelRes()">Undo</button></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
     <table class="table">
-      <thead>
-        <tr>
-          <th>First Name*</th>         
-          <th>Last Name*</th>
-          <th>Body Weight*</th>
-          <th>Bag Weight</th>
-          
-          <th>Depart/Arrive*</th>
-          <th>Date*</th>
-          <th>DepartureTime*</th>
-          <th>&nbsp;</th>
-        </tr>
-      </thead>
       <tbody>
-        <tr>
-          <td><input class="form-control" ng-model="main.newRes.FIRST"></td>
-          <td><input class="form-control" ng-model="main.newRes.LAST"></td>
-          <td>
-            <form name="myForm">
-                <input class="form-control" name="input" ng-model="main.newRes.WEIGHT" type="number" min="0" >
-                <div role="alert">
-                 <span class="error" ng-show="myForm.input.$error.number">
-                    Please enter a valid integer</span>
-                </div>
-            </form>
-          </td>
-          <td>
-            <form name="myForm1">
-              <input class="form-control" name="input1" ng-model="main.newRes.FWeight" ng-blur=main.overWeight() type="number" min="0">
-              <div role="alert">
-                 <span class="error" ng-show="myForm1.input1.$error.number">
-                    Please enter a valid integer</span>
-              </div>
-            </form>
-          </td>
-          <td>
-            <ui-select class="mainselectize" ng-model="main.code.selected" theme="selectize" ng-disabled="disabled" ng-change="main.makeList()">
-              <ui-select-match placeholder="Choose...">{{$select.selected.name}}</ui-select-match>
-              <ui-select-choices repeat="tc in main.travelCodes" >
-                <div ng-bind-html="tc.name | highlight: $select.search"></div>
-              </ui-select-choices>
-            </ui-select>
-          </td>
-          <td>
-            <datepicker date-format="EEEE MMM d, yyyy" date-min-limit="{{main.currDate}}" date-disabled-dates="{{main.disabledDates}}">
-              <input class="form-control" ng-model="main.newRes['DATE TO FLY']" ng-change="main.makeList()" type="text"/>
-            </datepicker>
-          </td>
-          <td>
-            <ui-select class="mainselectize" ng-model="main.smfltnum.selected" theme="selectize" ng-disabled="disabled" >
-              <ui-select-match placeholder="Choose...">{{$select.selected.time}}</ui-select-match>
-              <ui-select-choices repeat="tm in main.timeList" >
-                <div ng-bind-html="tm.time | highlight: $select.search"></div>
-              </ui-select-choices>
-            </ui-select>
-          </td>
-          <td><button class="btn btn-primary" ng-click="main.addRes()">Add/Update</button></td>
-          <td><button class="btn btn-danger" ng-click="main.cancelRes()">Undo</button></td>
-        </tr>
         <tr><td>Previous</td><td>Reservations</td><td>Below:</td></tr>
         <tr ng-repeat="res in main.resList">
           <td>{{res.FIRST}}</td>
