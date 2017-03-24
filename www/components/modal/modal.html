@@ -1,10 +1,14 @@
-<div class="modal-header">
+<div class="modal-header" ng-if="!modal.chat">
   <button ng-if="modal.dismissable" type="button" ng-click="$dismiss()" class="close">&times;</button>
   <h4 ng-if="modal.title" ng-bind="modal.title" class="modal-title"></h4>
 </div>
 <div class="modal-body">
   <p ng-if="modal.text" ng-bind="modal.text"></p>
   <div ng-if="modal.html" ng-bind-html="modal.html"></div>
+  <form ng-if="modal.formData" name="formData">
+    <label>Enter Here</label>
+    <input class="form-control" name="input" type="text" ng-model="modal.formData.data">
+  </form>
 </div>
 <div class="modal-footer">
   <button ng-repeat="button in modal.buttons" ng-class="button.classes" ng-click="button.click($event)" ng-bind="button.text" class="btn"></button>

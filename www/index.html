@@ -13,6 +13,10 @@
     <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
     <!-- build:css(client) app/vendor.css -->
       <!-- bower:css -->
+      <link rel="stylesheet" href="bower_components/components-font-awesome/css/font-awesome.css" />
+      <link rel="stylesheet" href="bower_components/ui-select/dist/select.css" />
+      <link rel="stylesheet" href="bower_components/selectize/dist/css/selectize.css" />
+      <link rel="stylesheet" href="bower_components/angularjs-datepicker/dist/angular-datepicker.min.css" />
       <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.css" />
       <link rel="stylesheet" href="bower_components/bootstrap-social/bootstrap-social.css" />
       <!-- endbower -->
@@ -26,6 +30,7 @@
       <link rel="stylesheet" href="components/footer/footer.css">
       <link rel="stylesheet" href="components/modal/modal.css">
       <link rel="stylesheet" href="components/oauth-buttons/oauth-buttons.css">
+      
       <!-- endinjector -->
     <!-- endbuild -->
   </head>
@@ -63,6 +68,13 @@
       <script src="bower_components/lodash/dist/lodash.compat.js"></script>
       <script src="bower_components/angular-ui-router/release/angular-ui-router.js"></script>
       <script src="bower_components/angular-validation-match/dist/angular-validation-match.min.js"></script>
+      <script src="bower_components/ui-select/dist/select.js"></script>
+      <script src="bower_components/select2/dist/js/select2.js"></script>
+      <script src="bower_components/sifter/sifter.js"></script>
+      <script src="bower_components/microplugin/src/microplugin.js"></script>
+      <script src="bower_components/selectize/dist/js/selectize.js"></script>
+      <script src="bower_components/angularjs-datepicker/dist/angular-datepicker.min.js"></script>
+      <script src="bower_components/angular-touch/angular-touch.js"></script>
       <!-- endbower -->
     <!-- endbuild -->
     <!-- build:js(.tmp) app/app.js -->
@@ -93,6 +105,7 @@
       <script src="app/account/signup/signup.controller.js"></script>
       <script src="components/util/util.service.js"></script>
       <script src="components/tcFactory/tcFactory.service.js"></script>
+      <script src="components/email/email.service.js"></script>
       <!-- endinjector -->
     <!-- endbuild -->
   </body>

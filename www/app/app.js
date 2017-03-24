@@ -7,9 +7,12 @@ angular.module('workspaceApp', [
   'ngCookies',
   'ngResource',
   'ngSanitize',
+  'ui.select',
   'ui.router',
   'ui.bootstrap',
-  'validation.match'
+  'validation.match',
+  '720kb.datepicker',
+  'ngTouch'
 ])
   .config(function($urlRouterProvider, $locationProvider) {
     $urlRouterProvider

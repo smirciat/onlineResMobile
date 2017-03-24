@@ -13,15 +13,23 @@
   letter-spacing: -1px;
 }
 
-.hero-unit {
+.jumbotron {
   position: relative;
   padding: 30px 15px;
   color: #F5F5F5;
   text-align: center;
   text-shadow: 0 1px 0 rgba(0, 0, 0, 0.1);
-  background: #4393B9;
+  background-color: #69c;
+  /*background: #C0D9D9;*/
+  /*background: #4393B9;*/
 }
 
 .navbar-text {
   margin-left: 15px;
+}
+.login {
+  color:white;
+}
+.login:hover{
+  color:black;
 }
