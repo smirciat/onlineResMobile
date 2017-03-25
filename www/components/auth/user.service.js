@@ -18,6 +18,19 @@ function UserResource($resource,tcFactory) {
       params: {
         id:'me'
       }
+    },
+    getEmails: {
+       method: 'GET',
+       params: {
+         id:'email'
+       },
+       isArray:true
+     },
+    changeEmail: {
+      method: 'PUT',
+      params: {
+        controller:'email'
+      }
     }
   });
 }

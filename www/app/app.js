@@ -12,7 +12,8 @@ var dependencies = [
   'ui.bootstrap',
   'validation.match',
   '720kb.datepicker',
-  'ngTouch'
+  'ngTouch',
+  'angularMoment'
 ];
 var isMobile = typeof(ionic)!=='undefined' && (ionic.Platform.is("ios") || ionic.Platform.is("android"));
 if(isMobile) {

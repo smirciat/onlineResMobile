@@ -75,7 +75,7 @@
           <tbody>
             <tr>
               <td>
-                <datepicker date-format="EEEE MMM d, yyyy" date-min-limit="{{main.currDate}}" date-disabled-dates="{{main.disabledDates}}">
+                <datepicker date-format="EEE MMM d, yyyy" date-min-limit="{{main.currDate}}" date-disabled-dates="{{main.disabledDates}}">
                   <input class="form-control" ng-model="main.newRes['DATE TO FLY']" ng-change="main.makeList()" type="text"/>
                 </datepicker>
               </td>
@@ -115,7 +115,7 @@
           <td>{{res.WEIGHT}}</td>
           <td>{{res.FWeight}}</td>
           <td>{{main.convert(res['Ref#'])}}</td>
-          <td>{{res['DATE TO FLY']| date:'MMM d, yyyy'}}</td>
+          <td>{{res['DATE TO FLY']| amDateFormat:'ddd MM/DD/YYYY'}}</td>
           <td>{{res.smfltnum}}</td>
           <td><button class="btn btn-danger" ng-click="main.remRes(res)">Remove</button></td>
           <td><button class="btn btn-success" ng-click="main.editRes(res)">Edit</button></td>

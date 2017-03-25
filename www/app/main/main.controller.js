@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('workspaceApp')
-  .controller('MainController',function($http, $scope, Auth, Modal, $timeout, $location,email,tcFactory) {
+  .controller('MainController',function($http, $scope, Auth, Modal, $timeout, $location,email,tcFactory,moment) {
     this.$http = $http;
     this.email=email;
     this.Auth = Auth;
@@ -15,9 +15,9 @@ angular.module('workspaceApp')
     this.code={};
     this.smfltnum={};
     this.tcFactory=tcFactory;
-    var d = new Date(Date.now());
-    this.currDate = new Date(d.getFullYear(),d.getMonth(),d.getDate()).toString();
-    this.endDate= new Date(d.getFullYear(),d.getMonth()+7,d.getDate()).toString();
+    var d = moment(Date.now());
+    this.currDate = d.format('MM/DD/YYYY');
+    this.endDate= d.add(7,'months');
     this.disabledDates = [
       "1/1/2017","12/25/2016","11/24/2016"
     ];
@@ -82,8 +82,8 @@ angular.module('workspaceApp')
     
 
   this.setFlights = function() {
-    var d = new Date(Date.now());
-    var today = new Date(d.getFullYear(),d.getMonth(),d.getDate());
+    var d = moment(Date.now());
+    var today = d;
     this.flightMatrix.forEach(number =>{
       if (number.flight>this.lastFlight) {
         if (new Date(number.start)<=new Date(this.newRes['DATE TO FLY'])&&new Date(number.end)>=new Date(this.newRes['DATE TO FLY'])){
@@ -111,8 +111,8 @@ angular.module('workspaceApp')
     //if (Object.keys(this.newRes).length>0) {
     if (!this.isInt(this.newRes.WEIGHT)||!this.isInt(this.newRes.FWeight)) return this.quickModal("Weight values need to be an integer");
     if (this.newRes.FIRST&&this.newRes.LAST&&this.newRes.WEIGHT&&this.newRes.smfltnum&&this.newRes['Ref#']&&this.newRes['DATE TO FLY']) {
-      var date = new Date(this.newRes['DATE TO FLY']);
-      this.newRes['DATE TO FLY']=(date.getMonth()+1) + "/" + date.getDate() + "/" + date.getFullYear();
+      var date = moment(this.newRes['DATE TO FLY']);
+      this.newRes['DATE TO FLY']=date.format('MMM/D/YYYY');
       this.resObj = {
         FIRST: this.newRes.FIRST,
         LAST: this.newRes.LAST,
@@ -145,7 +145,7 @@ angular.module('workspaceApp')
           this.newRes.FWeight= this.newRes.FWeight||0;
           this.newRes['FLIGHT#']="1" + this.newRes.smfltnum;
           this.newRes.uid=this.user()._id;
-          this.newRes['DATE RESERVED']=Date.now();
+          this.newRes['DATE RESERVED']=moment(Date.now());
           //post
           this.add("Add",this.resEntry,this.newRes);
         }
@@ -202,7 +202,7 @@ angular.module('workspaceApp')
     var newRes = Object.assign({},res);
     this.newRes = newRes;
     this.newRes.UPDATED = d;
-    this.newRes['DATE TO FLY']=(date.getMonth()+1) + "/" + date.getDate() + "/" + date.getFullYear();
+    this.newRes['DATE TO FLY']=moment(date);
     this.code.selected = this.email.travelCodes.filter(function ( tc ) {
       return tc.ref === newRes['Ref#'];
     })[0];
@@ -211,17 +211,17 @@ angular.module('workspaceApp')
    }
    
    this.reverseRes = function(res){
-     var date = new Date(res['DATE TO FLY']);
-     var d = new Date(Date.now());
-     var today = new Date(d.getFullYear(),d.getMonth(),d.getDate());
-     var tomorrow = new Date(d.getFullYear(),d.getMonth(),d.getDate()+1);
+     var date = moment(res['DATE TO FLY']);
+     var d = moment(Date.now());
+     var today = d;
+     var tomorrow = d.add(2,'day');
      var newRes = Object.assign({},res);
      this.newRes = newRes;
      this.newRes._id=undefined;
      this.newRes['INVOICE#']=undefined;
-     this.newRes['DATE TO FLY']=(date.getMonth()+1) + "/" + date.getDate() + "/" + date.getFullYear();
-     if (date<today) this.newRes['DATE TO FLY']=(d.getMonth()+1) + "/" + d.getDate() + "/" + d.getFullYear();
-     this.newRes['DATE RESERVED']=(d.getMonth()+1) + "/" + d.getDate() + "/" + d.getFullYear();
+     this.newRes['DATE TO FLY']=date;
+     if (date<today) this.newRes['DATE TO FLY']=d;
+     this.newRes['DATE RESERVED']=d;
      this.newRes['Ref#'] = 13-res['Ref#'];
      var hour = (d.getTime()-today.getTime())/3600000;
      var enough = (parseInt(res.smfltnum.substring(0,2))-hour);
@@ -294,7 +294,7 @@ angular.module('workspaceApp')
     this.setFlights();
     this.smfltnum.selected=undefined;
     //month starts with 0 for Jan var tempDate="2/18/16";
-    var query = "date=" + this.newRes['DATE TO FLY'];
+    var query = "date=" + thisDate;
     this.$http.get(Auth.api() + '/api/reservations?' + query).then(response => {
       var data=response.data;
       var sm="";
