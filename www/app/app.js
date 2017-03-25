@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('workspaceApp', [
+var dependencies = [
   'workspaceApp.auth',
   'workspaceApp.admin',
   'workspaceApp.constants',
@@ -13,10 +13,34 @@ angular.module('workspaceApp', [
   'validation.match',
   '720kb.datepicker',
   'ngTouch'
-])
-  .config(function($urlRouterProvider, $locationProvider) {
-    $urlRouterProvider
-      .otherwise('/');
+];
+var isMobile = typeof(ionic)!=='undefined' && (ionic.Platform.is("ios") || ionic.Platform.is("android"));
+if(isMobile) {
+    dependencies.push('ionic');
+}
 
-    $locationProvider.html5Mode(true);
-  });
+var ngModule = angular.module('workspaceApp', dependencies)
+    .config(function ($locationProvider, $compileProvider, $urlRouterProvider) {
+       $urlRouterProvider
+      .otherwise('/');
+       $locationProvider.html5Mode(true); // enable html5 mode
+       // other pieces of code.
+    });
+    //.run(function (application, $rootScope) {
+      // application.setPageTitle();
+       //$rootScope.$on('$stateChangeSuccess', function (event) {
+         // application.setPageTitle();
+       //});
+       // other pieces of code.
+   //});
+if(isMobile) {
+   ngModule.run(function ($ionicPlatform) {
+       $ionicPlatform.ready(function() {
+       // Anything native should go here, like StatusBar.styleLightContent()
+       if (window.StatusBar) {
+          // org.apache.cordova.statusbar required
+          StatusBar.styleDefault();
+       }
+    });
+  }); 
+}

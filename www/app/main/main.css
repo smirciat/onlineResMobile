@@ -36,6 +36,9 @@
 .bear{
   height: 200px;
 }
+.bear-small{
+  height: 1.7em;
+}
 th{
   height:4.2em;
 }
