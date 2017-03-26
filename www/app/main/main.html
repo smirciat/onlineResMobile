@@ -106,22 +106,17 @@
         </table>
       </div>
     </div>
+    </br>
     <table class="table">
       <tbody>
-        <tr><td>Previous</td><td>Reservations</td><td>Below:</td></tr>
-        <tr ng-repeat="res in main.resList">
-          <td>{{res.FIRST}}</td>
-          <td>{{res.LAST}}</td>
-          <td>{{res.WEIGHT}}</td>
-          <td>{{res.FWeight}}</td>
-          <td>{{main.convert(res['Ref#'])}}</td>
-          <td>{{res['DATE TO FLY']| amDateFormat:'ddd MM/DD/YYYY'}}</td>
-          <td>{{res.smfltnum}}</td>
-          <td><button class="btn btn-danger" ng-click="main.remRes(res)">Remove</button></td>
-          <td><button class="btn btn-success" ng-click="main.editRes(res)">Edit</button></td>
-          <td><button class="btn btn-warning" ng-click="main.reverseRes(res)"><i class="fa fa-refresh"></i></button></td>
-        </tr>
-      </tbody>  
+        <tr class="blue"><td>Previous</td><td>Reservations</td><td>Below:</td></tr>
+      </tbody>
     </table>
+        <div ng-repeat="res in main.resList">
+          <button class="btn btn-danger" ng-click="main.remRes(res)">Remove</button>
+          <button class="btn btn-success" ng-click="main.editRes(res)">Edit</button>
+          <button class="btn btn-warning" ng-click="main.reverseRes(res)"><i class="fa fa-refresh"></i></button>
+          {{res.FIRST + " " + res.LAST + " on " + (res['DATE TO FLY']| amDateFormat:'ddd MM/DD/YYYY') + " from " + main.convert(res['Ref#']) + " at " + res.time}}
+        </div>
 </div>
-<footer></footer>
+

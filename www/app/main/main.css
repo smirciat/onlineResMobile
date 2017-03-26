@@ -28,10 +28,10 @@
   margin-left: 15px;
 }
 .login {
-  color:white;
+  color:black;
 }
 .login:hover{
-  color:black;
+  color:green;
 }
 .bear{
   height: 200px;
@@ -41,4 +41,12 @@
 }
 th{
   height:4.2em;
+}
+.blue{
+  background-color:#ccffee;
+  font-weight:bold;
+}
+.nav-anchor{
+  padding-top:1em;
+  margin-top:1em;
 }

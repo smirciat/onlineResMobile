@@ -100,8 +100,6 @@ angular.module('workspaceApp')
   }
   
   this.addRes = function() {
-    
-    
     //move pulldown list selection to newRes object
     this.newRes['Ref#']=undefined;
     this.newRes.smfltnum=undefined;
@@ -211,10 +209,9 @@ angular.module('workspaceApp')
    }
    
    this.reverseRes = function(res){
-     var date = moment(res['DATE TO FLY']);
-     var d = moment(Date.now());
+     var date = new Date(res['DATE TO FLY']);
+     var d = new Date(Date.now());
      var today = d;
-     var tomorrow = d.add(2,'day');
      var newRes = Object.assign({},res);
      this.newRes = newRes;
      this.newRes._id=undefined;
@@ -229,6 +226,7 @@ angular.module('workspaceApp')
        return tc.ref === newRes['Ref#'];
      })[0];
      this.makeList(this.newRes.smfltnum);
+     res['DATE TO FLY']=moment(res['DATE TO FLY']);
   }
   
   this.refresh = function(){
@@ -251,6 +249,11 @@ angular.module('workspaceApp')
         var today = new Date(year,month,day-5);
         return today<=date;
       });
+      this.resList.forEach(res=>{
+        this.timeConvert(res.smfltnum,res['Ref#'],res['DATE TO FLY']).then(response=>{
+          res.time = response;
+        });
+      });
     });
   }
   
@@ -259,6 +262,26 @@ angular.module('workspaceApp')
       return tc.ref === refnum;
     })[0];
     return obj.name;
+  }
+  
+  this.timeConvert = function(smfltnum,ref,date){
+    return this.$http.post(Auth.api() + '/api/scheduledFlights',{date:date}).then(response => {
+      var scheduledFlights=response.data;
+      var fltArray = scheduledFlights.filter(function(flight){
+        return parseInt(smfltnum.substring(0,2),10)===flight.smfltnum;
+      });
+      if (fltArray.length>0){
+        var field = "begin";
+        if (ref<6&ref>3) field = 'sovFront';
+        if (ref<12&&ref>5) field = 'pgmKeb';
+        if (ref===12) field = 'sovBack';
+        return fltArray[0][field];
+      }
+      else {
+        if (ref>12) return smfltnum.substring(0,2) + ':00';
+      }
+  
+    });
   }
   
   this.sendEmail = function(res){
