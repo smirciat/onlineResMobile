@@ -109,14 +109,14 @@
     </br>
     <table class="table">
       <tbody>
-        <tr class="blue"><td>Previous</td><td>Reservations</td><td>Below:</td></tr>
+        <tr class="ltblue"><td>Previous</td><td>Reservations</td><td>Below:</td></tr>
       </tbody>
     </table>
-        <div ng-repeat="res in main.resList">
-          <button class="btn btn-danger" ng-click="main.remRes(res)">Remove</button>
-          <button class="btn btn-success" ng-click="main.editRes(res)">Edit</button>
-          <button class="btn btn-warning" ng-click="main.reverseRes(res)"><i class="fa fa-refresh"></i></button>
-          {{res.FIRST + " " + res.LAST + " on " + (res['DATE TO FLY']| amDateFormat:'ddd MM/DD/YYYY') + " from " + main.convert(res['Ref#']) + " at " + res.time}}
-        </div>
+    <div ng-repeat="res in main.resList">
+      <button class="btn btn-danger" ng-click="main.remRes(res)">Remove</button>
+      <button class="btn btn-success" ng-click="main.editRes(res)">Edit</button>
+      <button class="btn btn-warning" ng-click="main.reverseRes(res)"><i class="fa fa-refresh"></i></button>
+      {{res.FIRST + " " + res.LAST + " on " + (res['DATE TO FLY']| amDateFormat:'ddd MM/DD/YYYY') + " from " + main.convert(res['Ref#']) + " at " + res.time}}
+    </div>
 </div>
 

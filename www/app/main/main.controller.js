@@ -36,7 +36,7 @@ angular.module('workspaceApp')
     this.delete = Modal.confirm.check(reservation => {
       var user=this.user();
       reservation.Comment = user._id + ' ' + user.name;
-      reservation.UPDATED = Date.now();
+      reservation.UPDATED = moment(Date.now());
       this.$http.post(Auth.api() + 'api/dels',reservation);
       this.$http.put(Auth.api() + '/api/reservations/delete/' + reservation._id,{user:user, reservation:reservation}).then(response => {
         this.refresh();
@@ -199,7 +199,7 @@ angular.module('workspaceApp')
     }
     var newRes = Object.assign({},res);
     this.newRes = newRes;
-    this.newRes.UPDATED = d;
+    this.newRes.UPDATED = moment(d);
     this.newRes['DATE TO FLY']=moment(date);
     this.code.selected = this.email.travelCodes.filter(function ( tc ) {
       return tc.ref === newRes['Ref#'];
@@ -218,7 +218,7 @@ angular.module('workspaceApp')
      this.newRes['INVOICE#']=undefined;
      this.newRes['DATE TO FLY']=date;
      if (date<today) this.newRes['DATE TO FLY']=d;
-     this.newRes['DATE RESERVED']=d;
+     this.newRes['DATE RESERVED']=moment(d);
      this.newRes['Ref#'] = 13-res['Ref#'];
      var hour = (d.getTime()-today.getTime())/3600000;
      var enough = (parseInt(res.smfltnum.substring(0,2))-hour);
