@@ -23,6 +23,6 @@ angular.module('workspaceApp')
           this.message = '';
         });
     }
-  }
+  };
   
 });

@@ -23,7 +23,7 @@ if(isMobile) {
 var ngModule = angular.module('workspaceApp', dependencies)
     .config(function ($locationProvider, $compileProvider, $urlRouterProvider) {
        $urlRouterProvider
-      .otherwise('/');
+      .otherwise('main');
        $locationProvider.html5Mode(true); // enable html5 mode
        // other pieces of code.
     });

@@ -82,8 +82,6 @@ angular.module('workspaceApp')
     
 
   this.setFlights = function() {
-    var d = moment(Date.now());
-    var today = d;
     this.flightMatrix.forEach(number =>{
       if (number.flight>this.lastFlight) {
         if (new Date(number.start)<=new Date(this.newRes['DATE TO FLY'])&&new Date(number.end)>=new Date(this.newRes['DATE TO FLY'])){
@@ -97,7 +95,7 @@ angular.module('workspaceApp')
       }
     });
     
-  }
+  };
   
   this.addRes = function() {
     //move pulldown list selection to newRes object
@@ -155,7 +153,7 @@ angular.module('workspaceApp')
       
     }
     else this.quickModal("Please enter the required fields marked with *");
-  }
+  };
 
   this.remRes = function(res) {
     var date = new Date(res['DATE TO FLY']);
@@ -167,20 +165,20 @@ angular.module('workspaceApp')
       return;
     }
     var hour = (d.getTime()-today.getTime())/3600000;
-    var enough = (parseInt(res.smfltnum.substring(0,2))-hour);
+    var enough = (parseInt(res.smfltnum.substring(0,2),10)-hour);
     if (date>=today && date<tomorrow && enough<2) {
       this.quickModal("Sorry, you cannot edit a reservation this close to flight time. Please call our office at (907) 235-1511 or (888) 482-1511.");
       return;
     }
     this.delete("Delete", 'Reservation for ' + res.FIRST + ' ' + res.LAST + ' from ' + this.convert(res['Ref#']),res);
-  }
+  };
   
   this.cancelRes = function(){
     this.newRes = {};
     this.code.selected=undefined;
     this.smfltnum.selected=undefined;
     this.refresh();
-  }
+  };
   
   this.editRes = function(res){
     var date = new Date(res['DATE TO FLY']);
@@ -192,7 +190,7 @@ angular.module('workspaceApp')
       return;
     }
     var hour = (d.getTime()-today.getTime())/3600000;
-    var enough = (parseInt(res.smfltnum.substring(0,2))-hour);
+    var enough = (parseInt(res.smfltnum.substring(0,2),10)-hour);
     if (date>=today && date<tomorrow && enough<2) {
       this.quickModal("Sorry, you cannot edit a reservation this close to flight time. Please call our office at (907) 235-1511 or (888) 482-1511.");
       return;
@@ -206,7 +204,7 @@ angular.module('workspaceApp')
     })[0];
     this.makeList(this.newRes.smfltnum);
      
-   }
+   };
    
    this.reverseRes = function(res){
      var date = new Date(res['DATE TO FLY']);
@@ -220,14 +218,12 @@ angular.module('workspaceApp')
      if (date<today) this.newRes['DATE TO FLY']=d;
      this.newRes['DATE RESERVED']=moment(d);
      this.newRes['Ref#'] = 13-res['Ref#'];
-     var hour = (d.getTime()-today.getTime())/3600000;
-     var enough = (parseInt(res.smfltnum.substring(0,2))-hour);
      this.code.selected = this.email.travelCodes.filter(function ( tc ) {
        return tc.ref === newRes['Ref#'];
      })[0];
      this.makeList(this.newRes.smfltnum);
      res['DATE TO FLY']=moment(res['DATE TO FLY']);
-  }
+  };
   
   this.refresh = function(){
     //response.data is an array of objects representing reservations made by current user
@@ -255,14 +251,14 @@ angular.module('workspaceApp')
         });
       });
     });
-  }
+  };
   
   this.convert = function(refnum){
     var obj = this.email.travelCodes.filter(function ( tc ) {
       return tc.ref === refnum;
     })[0];
     return obj.name;
-  }
+  };
   
   this.timeConvert = function(smfltnum,ref,date){
     return this.$http.post(Auth.api() + '/api/scheduledFlights',{date:date}).then(response => {
@@ -282,20 +278,20 @@ angular.module('workspaceApp')
       }
   
     });
-  }
+  };
   
   this.sendEmail = function(res){
     this.email.sendEmail(res, this.resEntry,this.user());
-  }
+  };
   
   this.showHelp = function(){
     this.quickModal("The first line contains input boxes for the details of your new reservation.  Below that are all the reservations associated with your account.  Click Add/Update to finalize your reservation, then you will see it below.  If you wish to make a change, the Remove and Edit buttons are available.  The orange button allows you to create a new reservation in the opposite direction of the original one. Click Edit to bring an existing reservation to the top row where you can edit it.  Click Undo if you change your mind and do not wish to make an edit. If your desired departure time does not appear in the pull-down list, please call us to make your reservation or choose another time.");
-  }
+  };
   
   this.overWeight = function(){
     if (this.newRes.FWeight>50)
       this.quickModal("The first 50 pounds of baggage is included with your ticket.  Additional fees apply for overweight baggage.  Please be aware that we will make every effort to accomodate your baggage on the flight with you, but we may need to bring some of it at a later time.  If you need all of your baggage to stay with you, please consider whether a charter is a good option for you.  Please call us for details. (907) 235-1511 or (888) 481-1511");
-  }
+  };
   
   this.isInt = function(value) {
     //not tradionally part of this, but workes for this application
@@ -306,7 +302,7 @@ angular.module('workspaceApp')
     }
     x = parseFloat(value);
     return (x | 0) === x;
-  }
+  };
 
   this.makeList = function(sfn){
     //don't do this if one of the fields is blank
