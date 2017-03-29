@@ -5,34 +5,31 @@ angular.module('workspaceApp')
     this.user = {};
     this.errors = {};
     this.submitted = false;
-
-
-    this.Auth = Auth;
-    this.$state = $state;
+    var self =this;
 
 
   this.register = function(form) {
     this.submitted = true;
 
     if (form.$valid) {
-      this.Auth.createUser({
+      Auth.createUser({
         name: this.user.name,
         email: this.user.email,
         password: this.user.password
       })
-      .then(() => {
+      .then(function()  {
         // Account created, redirect to home
-        this.$state.go('main');
+        $state.go('main');
       })
-      .catch(err => {
+      .catch(function(err) {
         err = err.data;
-        this.errors = {};
+        self.errors = {};
 
         // Update validity of form fields that match the sequelize errors
         if (err.name) {
-          angular.forEach(err.fields, field => {
+          angular.forEach(err.fields, function(field) {
             form[field].$setValidity('mongoose', false);
-            this.errors[field] = err.message;
+            self.errors[field] = err.message;
           });
         }
       });

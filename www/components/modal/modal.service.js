@@ -8,7 +8,7 @@ angular.module('workspaceApp')
      * @param  {String} modalClass - (optional) class(es) to be applied to the modal
      * @return {Object}            - the instance $uibModal.open() returns
      */
-    function openModal(scope = {}, modalClass = 'modal-default') {
+    function openModal(scope, modalClass) {
       var modalScope = $rootScope.$new();
 
       angular.extend(modalScope, scope);
@@ -31,7 +31,7 @@ angular.module('workspaceApp')
          * @param  {Function} del - callback, ran when delete is confirmed
          * @return {Function}     - the function to open the modal (ex. myModalFn)
          */
-        check(del = angular.noop) {
+        check(del) {
           /**
            * Open a delete confirmation modal
            * @param  {String} name   - name or info to show on modal
@@ -96,7 +96,7 @@ angular.module('workspaceApp')
             });
           };
         },
-        quickMessage(del = angular.noop) {
+        quickMessage(del) {
           /**
            * Open a delete confirmation modal
            * @param  {String} name   - name or info to show on modal
@@ -127,7 +127,7 @@ angular.module('workspaceApp')
             });
           };
         } ,
-        choice(del = angular.noop) {
+        choice(del) {
           /**
            * Open a delete confirmation modal
            * @param  {String} name   - name or info to show on modal

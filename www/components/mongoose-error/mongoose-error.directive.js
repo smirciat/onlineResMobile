@@ -9,7 +9,7 @@ angular.module('workspaceApp')
       restrict: 'A',
       require: 'ngModel',
       link: function(scope, element, attrs, ngModel) {
-        element.on('keydown', () => ngModel.$setValidity('mongoose', true));
+             element.on('keydown', function() {ngModel.$setValidity('mongoose', true);});
       }
     };
   });

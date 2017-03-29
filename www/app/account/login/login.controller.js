@@ -5,23 +5,22 @@ angular.module('workspaceApp')
     this.user = {};
     this.errors = {};
     this.submitted = false;
-    this.Auth = Auth;
-    this.$state = $state;
+    var self = this;
 
     this.login = function(form) {
       this.submitted = true;
   
       if (form.$valid) {
-        this.Auth.login({
+        Auth.login({
           email: this.user.email,
           password: this.user.password
         })
-        .then(() => {
+        .then(function() {
           // Logged in, redirect to home
-          this.$state.go('main');
+          $state.go('main');
         })
-        .catch(err => {
-          this.errors.other = err.message;
+        .catch(function(err) {
+          self.errors.other = err.message;
         });
       }
     };

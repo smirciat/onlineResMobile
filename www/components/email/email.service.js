@@ -125,12 +125,12 @@ angular.module('workspaceApp')
           text: resEntry, // plaintext body
           html: template(res) // html body
         };
-        $http.post(Auth.api() + '/api/mails', mailOptions).then(response => {
+        $http.post(Auth.api() + '/api/mails', mailOptions).then(function(response) {
           //res.status = 500 for fail, 200 for success
           
-        },response => {
+        },function(response) {
           //this is a failure
-          $http.put(Auth.api() + '/api/mails', {res:resEntry,uid:user._id}).then(response => {
+          $http.put(Auth.api() + '/api/mails', {res:resEntry,uid:user._id}).then(function(response) {
             //log an email failure
           });
         });

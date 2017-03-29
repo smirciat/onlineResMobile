@@ -3,10 +3,12 @@
 (function() {
 
 function AuthService($location, $http, $cookies, $q, appConfig, Util, User,tcFactory) {
+
   var api = tcFactory.api();
   var safeCb = Util.safeCb;
   var currentUser = {};
   var userRoles = appConfig.userRoles || [];
+  var self = this;
 
   if ($cookies.get('token') && $location.path() !== '/logout') {
     currentUser = User.get();
@@ -26,16 +28,16 @@ function AuthService($location, $http, $cookies, $q, appConfig, Util, User,tcFac
         email: user.email,
         password: user.password
       })
-        .then(res => {
+        .then(function(res) {
           $cookies.put('token', res.data.token);
           currentUser = User.get();
           return currentUser.$promise;
         })
-        .then(user => {
+        .then(function(user) {
           safeCb(callback)(null, user);
           return user;
         })
-        .catch(err => {
+        .catch(function(err) {
           Auth.logout();
           safeCb(callback)(err.data);
           return $q.reject(err.data);
@@ -104,10 +106,10 @@ function AuthService($location, $http, $cookies, $q, appConfig, Util, User,tcFac
       var value = (currentUser.hasOwnProperty('$promise')) ?
         currentUser.$promise : currentUser;
       return $q.when(value)
-        .then(user => {
+        .then(function(user) {
           safeCb(callback)(user);
           return user;
-        }, () => {
+        }, function() {
           safeCb(callback)({});
           return {};
         });
@@ -126,7 +128,7 @@ function AuthService($location, $http, $cookies, $q, appConfig, Util, User,tcFac
       }
 
       return Auth.getCurrentUser(null)
-        .then(user => {
+        .then(function(user) {
           var is = user.hasOwnProperty('role');
           safeCb(callback)(is);
           return is;
@@ -151,7 +153,7 @@ function AuthService($location, $http, $cookies, $q, appConfig, Util, User,tcFac
       }
 
       return Auth.getCurrentUser(null)
-        .then(user => {
+        .then(function(user) {
           var has = (user.hasOwnProperty('role')) ?
             hasRole(user.role, role) : false;
           safeCb(callback)(has);

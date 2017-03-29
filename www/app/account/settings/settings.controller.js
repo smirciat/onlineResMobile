@@ -6,21 +6,21 @@ angular.module('workspaceApp')
     this.errors = {};
     this.submitted = false;
 
-    this.Auth = Auth;
-  
+
+              var self = this;
 
   this.changePassword = function(form) {
     this.submitted = true;
 
     if (form.$valid) {
       this.Auth.changePassword(this.user.oldPassword, this.user.newPassword)
-        .then(() => {
-          this.message = 'Password successfully changed.';
+        .then(function() {
+          self.message = 'Password successfully changed.';
         })
-        .catch(() => {
+        .catch(function() {
           form.password.$setValidity('mongoose', false);
-          this.errors.other = 'Incorrect password';
-          this.message = '';
+          self.errors.other = 'Incorrect password';
+          self.message = '';
         });
     }
   };
