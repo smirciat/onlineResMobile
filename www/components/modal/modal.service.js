@@ -102,6 +102,7 @@ angular.module('workspaceApp')
            * @param  {String} name   - name or info to show on modal
            * @param  {All}           - any additional args are passed straight to del callback
            */
+          var del=del||angular.noop;
           return function() {
             var args = Array.prototype.slice.call(arguments),
                 name = args.shift(),

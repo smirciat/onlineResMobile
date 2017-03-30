@@ -25,9 +25,7 @@ angular.module('workspaceApp')
     var sections=[];
     
     return {
-        api: function(){
-          return api;
-        },
+        api: api,
         getData: function (callback) {
             if(travelCodes) {
                 return callback(travelCodes);

@@ -17,11 +17,13 @@ angular.module('workspaceApp')
     this.smfltnum={};
     this.tcFactory=tcFactory;
     var d = moment(Date.now());
+              var api = tcFactory.api;
     this.currDate = d.format('MM/DD/YYYY');
     this.endDate= d.add(7,'months');
     this.disabledDates = [
-      "1/1/2017","12/25/2016","11/24/2016"
+      "1/1/2018","12/25/2017","11/23/2017"
     ];
+    this.disabled = [moment("1/1/2018").format('MM/DD/YYYY'),moment("12/25/2017").format('MM/DD/YYYY'),moment("11/23/2017").format('MM/DD/YYYY')];
     this.timeList = [];
     this.firstFlight = 9;
     this.lastFlight = 16;
@@ -39,25 +41,25 @@ angular.module('workspaceApp')
       var user=self.user();
       reservation.Comment = user._id + ' ' + user.name;
       reservation.UPDATED = moment(Date.now());
-      self.$http.post(Auth.api() + 'api/dels',reservation);
-      self.$http.put(Auth.api() + '/api/reservations/delete/' + reservation._id,{user:user, reservation:reservation}).then(function(response){
+      self.$http.post(api + 'api/dels',reservation);
+      self.$http.put(api + '/api/reservations/delete/' + reservation._id,{user:user, reservation:reservation}).then(function(response){
         self.refresh();
       });
     });
     self.add = Modal.confirm.check(function(reservation) {
-      self.$http.post(Auth.api() + '/api/reservations', reservation).then(function(response) {
+      self.$http.post(api + '/api/reservations', reservation).then(function(response) {
             self.sendEmail(self.resObj);
             self.cancelRes();
           });
     });
     self.update = Modal.confirm.check(function(reservation) {
-      self.$http.put(Auth.api() + '/api/reservations/' + reservation._id, {user:self.user(), reservation:reservation}).then(function(response) {
+      self.$http.put(api + '/api/reservations/' + reservation._id, {user:self.user(), reservation:reservation}).then(function(response) {
             self.sendEmail(self.resObj);
             self.cancelRes();
           });
     });
     self.getPhone = Modal.confirm.enterData(function(formData){
-      self.$http.post(Auth.api() + '/api/userAttributes', {uid:self.user()._id, phone: formData.data}).then(function(response) {
+      self.$http.post(api + '/api/userAttributes', {uid:self.user()._id, phone: formData.data}).then(function(response) {
       });
     });
     self.getEmail = Modal.confirm.enterData(function(formData){
@@ -73,7 +75,7 @@ angular.module('workspaceApp')
         self.newRes.FIRST =  self.user().name.split(" ")[0];
         self.newRes.LAST =  self.user().name.split(" ")[1];
         if (self.user().name.split(" ").length > 2) self.newRes.LAST += " " + self.user().name.split(" ")[2];
-        self.$http.get(Auth.api() + '/api/userAttributes/user/' + self.user()._id).then(function(response) {
+        self.$http.get(api + '/api/userAttributes/user/' + self.user()._id).then(function(response) {
           if (!response.data[0]||!response.data[0].phone) {
             //user needs a phone number
             self.getPhone("Please enter a phone number for your account in settings.");
@@ -119,7 +121,7 @@ angular.module('workspaceApp')
         FROM: self.code.selected.name
       };
       self.resEntry = self.newRes.FIRST + ' ' + self.newRes.LAST + ' has a reservation at ' +  self.smfltnum.selected.time + ' on ' + self.newRes["DATE TO FLY"] + ' from ' + self.code.selected.name + '.';
-      self.$http.get(Auth.api() + '/api/userAttributes/user/' + self.user()._id).then(function(response) {
+      self.$http.get(api + '/api/userAttributes/user/' + self.user()._id).then(function(response) {
         if (!response.data[0]||!response.data[0].phone) {
           self.getPhone("Please enter a phone number for your account.");
           return;
@@ -229,7 +231,7 @@ angular.module('workspaceApp')
   
   self.refresh = function(){
     //response.data is an array of objects representing reservations made by current user
-    self.$http.get(Auth.api() + '/api/reservations/user/' + self.user()._id).then(function(response) {
+      self.$http.get(api + '/api/reservations/user/' + self.user()._id).then(function(response) {
       self.resList=response.data.filter(function(res){
         var date = new Date(res['DATE TO FLY']);
         var d = new Date(Date.now());
@@ -264,7 +266,7 @@ angular.module('workspaceApp')
   };
   
   self.timeConvert = function(smfltnum,ref,date){
-    return self.$http.post(Auth.api() + '/api/scheduledFlights',{date:date}).then(function(response) {
+    return self.$http.post(api + '/api/scheduledFlights',{date:date}).then(function(response) {
       var scheduledFlights=response.data;
       var fltArray = scheduledFlights.filter(function(flight){
         return parseInt(smfltnum.substring(0,2),10)===flight.smfltnum;
@@ -307,6 +309,32 @@ angular.module('workspaceApp')
     return (x | 0) === x;
   };
 
+  self.newDate = function(){
+    var d = moment(self.newRes['DATE TO FLY']);
+    var today = moment(self.currDate);
+    if (d<today) {
+       self.quickModal("This date is in the past, please try again");
+       self.newRes['DATE TO FLY']=new Date(self.currDate);
+       return;
+    }
+    else {
+      if (self.disabled.includes(d.format("MM/DD/YYYY"))) {
+        self.quickModal("Sorry, Smokey Bay will be closed on this date, please try again");
+        self.newRes['DATE TO FLY']=new Date(self.currDate);
+        return;
+      }
+      else {
+        if (d.diff(today)>18408222000) {
+              self.quickModal("Sorry, please pick a date within the next seven months");
+              self.newRes['DATE TO FLY']=new Date(self.currDate);
+              return;
+        }
+        else self.makeList();
+      }
+    }
+    
+  };
+              
   self.makeList = function(sfn){
     //don't do this if one of the fields is blank
     if (!(self.newRes['DATE TO FLY']&&self.code.selected)) return;
@@ -317,7 +345,7 @@ angular.module('workspaceApp')
     self.smfltnum.selected=undefined;
     //month starts with 0 for Jan var tempDate="2/18/16";
     var query = "date=" + selfDate;
-    self.$http.get(Auth.api() + '/api/reservations?' + query).then(function(response) {
+    self.$http.get(api + '/api/reservations?' + query).then(function(response) {
       var data=response.data;
       var sm="";
       var sma="B";
@@ -333,7 +361,7 @@ angular.module('workspaceApp')
       var hour = (d.getTime()-today.getTime())/3600000;
       var maxPax;
       var ref=self.code.selected.ref;
-      self.$http.post(Auth.api() + '/api/scheduledFlights',{date:self.newRes['DATE TO FLY']}).then(function(response) {
+      self.$http.post(api + '/api/scheduledFlights',{date:self.newRes['DATE TO FLY']}).then(function(response) {
         var scheduledFlights=response.data;
         self.timeList=[];
         //iterate through list of available flights to see if full or still available

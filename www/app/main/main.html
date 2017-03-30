@@ -75,9 +75,12 @@
           <tbody>
             <tr>
               <td>
-                <datepicker date-format="EEE MMM d, yyyy" date-min-limit="{{main.currDate}}" date-disabled-dates="{{main.disabledDates}}">
-                  <input class="form-control" ng-model="main.newRes['DATE TO FLY']" ng-change="main.makeList()" type="text"/>
-                </datepicker>
+                  <label class="item item-input">
+                      <input class="form-control" ng-model="main.newRes['DATE TO FLY']" ng-change="main.newDate()" type="date"/>
+                  </label>
+                <!--<datepicker date-format="EEE MMM d, yyyy" date-min-limit="{{main.currDate}}" date-disabled-dates="{{main.disabledDates}}">
+                  <input class="form-control" ng-model="main.newRes['DATE TO FLY']" ng-change="main.makeList()" />
+                </datepicker>-->
               </td>
               <td>
                 <ui-select class="mainselectize" ng-model="main.smfltnum.selected" theme="selectize" ng-disabled="disabled" >
@@ -99,8 +102,8 @@
           </thead>
           <tbody>
             <tr>
-              <td><button class="btn btn-primary" ng-click="main.addRes()">Add/Update</button></td>
-              <td><button class="btn btn-danger" ng-click="main.cancelRes()">Undo</button></td>
+              <td><button class="btn  btn-lg btn-primary" ng-click="main.addRes()">Add/Update</button></td>
+              <td><button class="btn btn-lg btn-danger" ng-click="main.cancelRes()">Undo</button></td>
             </tr>
           </tbody>
         </table>
@@ -113,9 +116,9 @@
       </tbody>
     </table>
     <div ng-repeat="res in main.resList">
-      <button class="btn btn-danger" ng-click="main.remRes(res)">Remove</button>
-      <button class="btn btn-success" ng-click="main.editRes(res)">Edit</button>
-      <button class="btn btn-warning" ng-click="main.reverseRes(res)"><i class="fa fa-refresh"></i></button>
+      <button class="btn btn-lg btn-danger" ng-click="main.remRes(res)">Remove</button>
+      <button class="btn btn-lg btn-success" ng-click="main.editRes(res)">Edit</button>
+      <button class="btn btn-lg btn-warning" ng-click="main.reverseRes(res)"><i class="fa fa-refresh"></i></button>
       {{res.FIRST + " " + res.LAST + " reserved on " + (res['DATE TO FLY']| amDateFormat:'ddd MM/DD/YYYY') + " from " + main.convert(res['Ref#']) + " at " + res.time}}
     </div>
 </div>

@@ -3,7 +3,7 @@
 (function() {
 
 function UserResource($resource,tcFactory) {
-  var api = tcFactory.api();
+  var api = tcFactory.api;
   return $resource(api + '/api/users/:id/:controller', {
     id: '@_id'
   }, {

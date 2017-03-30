@@ -27,6 +27,11 @@
 .navbar-text {
   margin-left: 15px;
 }
+.navbar-brand,
+.navbar-nav li a {
+    line-height: 4em;
+    height: 4em;
+}
 .login {
   color:black;
 }
@@ -37,7 +42,7 @@
   height: 200px;
 }
 .bear-small{
-  height: 1.7em;
+  height: 3em;
 }
 th{
   height:4.2em;

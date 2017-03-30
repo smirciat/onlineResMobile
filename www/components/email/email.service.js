@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('workspaceApp')
-  .factory('email', function ($http,Auth) {
+  .factory('email', function ($http,tcFactory) {
     var template = function(res) {
       return '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">' +
         '<html xmlns="http://www.w3.org/1999/xhtml" style="font-family: \'Helvetica Neue\', Helvetica, Arial, sans-serif; box-sizing: border-box; font-size: 14px; margin: 0;">' +
@@ -125,12 +125,12 @@ angular.module('workspaceApp')
           text: resEntry, // plaintext body
           html: template(res) // html body
         };
-        $http.post(Auth.api() + '/api/mails', mailOptions).then(function(response) {
+        $http.post(tcFactory.api + '/api/mails', mailOptions).then(function(response) {
           //res.status = 500 for fail, 200 for success
           
         },function(response) {
           //this is a failure
-          $http.put(Auth.api() + '/api/mails', {res:resEntry,uid:user._id}).then(function(response) {
+          $http.put(tcFactory.api + '/api/mails', {res:resEntry,uid:user._id}).then(function(response) {
             //log an email failure
           });
         });

@@ -4,7 +4,7 @@
 
 function AuthService($location, $http, $cookies, $q, appConfig, Util, User,tcFactory) {
 
-  var api = tcFactory.api();
+  var api = tcFactory.api;
   var safeCb = Util.safeCb;
   var currentUser = {};
   var userRoles = appConfig.userRoles || [];
@@ -24,6 +24,7 @@ function AuthService($location, $http, $cookies, $q, appConfig, Util, User,tcFac
      * @return {Promise}
      */
     login(user, callback) {
+ 
       return $http.post(api + '/auth/local', {
         email: user.email,
         password: user.password
@@ -180,10 +181,6 @@ function AuthService($location, $http, $cookies, $q, appConfig, Util, User,tcFac
      */
     getToken() {
       return $cookies.get('token');
-    },
-    
-    api() {
-      return api;
     }
   };
 
