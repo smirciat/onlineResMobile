@@ -7,7 +7,7 @@ angular.module('workspaceApp')
         url: '/login',
         templateUrl: 'app/account/login/login.html',
         controller: 'LoginController',
-        controllerAs: 'vm'
+        controllerAs: 'login'
       })
       .state('logout', {
         url: '/logout?referrer',

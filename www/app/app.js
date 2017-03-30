@@ -4,6 +4,7 @@ window.onerror = function(errorMsg,url,lineNumber){
 };
 
 angular.module('workspaceApp', ['ionic',
+                                'ngCordova',
                                 'workspaceApp.auth',
                                 'workspaceApp.admin',
                                 'workspaceApp.constants',

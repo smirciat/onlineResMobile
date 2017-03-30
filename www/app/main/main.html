@@ -54,7 +54,7 @@
                 </form>
               </td>
               <td>
-                <ui-select class="mainselectize" ng-model="main.code.selected" theme="selectize" ng-disabled="disabled" ng-change="main.makeList()"  ng-focus="main.hideKeyboard()" >
+                <ui-select class="mainselectize" ng-model="main.code.selected" theme="selectize" ng-disabled="disabled" ng-change="main.makeList()"  ng-click="main.hideKeyboard()" >
                   <ui-select-match placeholder="Choose...">{{$select.selected.name}}</ui-select-match>
                   <ui-select-choices repeat="tc in main.travelCodes" >
                     <div ng-bind-html="tc.name | highlight: $select.search"></div>
@@ -80,12 +80,14 @@
                 </label>
               </td>
               <td>
-                <ui-select class="mainselectize" ng-model="main.smfltnum.selected" theme="selectize" ng-disabled="disabled" ng-focus="main.hideKeyboard()">
+               <div >
+                <ui-select class="mainselectize" ng-model="main.smfltnum.selected" theme="selectize" ng-disabled="disabled" ng-click="main.hideKeyboard()">
                   <ui-select-match placeholder="Choose...">{{$select.selected.time}}</ui-select-match>
                   <ui-select-choices repeat="tm in main.timeList" >
                     <div ng-bind-html="tm.time | highlight: $select.search"></div>
                   </ui-select-choices>
                 </ui-select>
+               </div>
               </td>
             </tr>
           </tbody>

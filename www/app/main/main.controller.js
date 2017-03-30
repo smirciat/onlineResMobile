@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('workspaceApp')
-  .controller('MainController',function($http, $scope, Auth, Modal, $timeout, $location,email,tcFactory,moment) {
+  .controller('MainController',function($http, $scope, Auth, Modal, $timeout, $location, $ionicPlatform,$cordovaKeyboard,email,tcFactory,moment) {
     
     this.$http = $http;
     this.email=email;
@@ -268,11 +268,12 @@ angular.module('workspaceApp')
   };
   
   self.hideKeyboard = function(){
-    $timeout(function(){
-      if (window.cordova && window.cordova.plugins && window.cordova.plugins.Keyboard) {
-        cordova.plugins.Keyboard.close();
-      }
-    },15);
+    $ionicPlatform.ready(function(){
+        $timeout(function(){
+          $cordovaKeyboard.close();
+        }
+        ,300);
+    });
   };
   
   self.timeConvert = function(smfltnum,ref,date){

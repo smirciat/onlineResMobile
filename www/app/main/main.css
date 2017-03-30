@@ -55,3 +55,8 @@ th{
   padding-top:1em;
   margin-top:1em;
 }
+.block{
+    vertical-align: middle;
+    position: relative;
+    bottom: 1px;
+}
