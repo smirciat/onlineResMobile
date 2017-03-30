@@ -20,10 +20,12 @@ angular.module('workspaceApp')
               var api = tcFactory.api;
     this.currDate = d.format('MM/DD/YYYY');
     this.endDate= d.add(7,'months');
-    this.disabledDates = [
-      "1/1/2018","12/25/2017","11/23/2017"
-    ];
-    this.disabled = [moment("1/1/2018").format('MM/DD/YYYY'),moment("12/25/2017").format('MM/DD/YYYY'),moment("11/23/2017").format('MM/DD/YYYY')];
+    this.disabled = [moment("1/1/2018").format('MM/DD/YYYY'),
+                     moment("12/25/2017").format('MM/DD/YYYY'),
+                     moment("11/23/2017").format('MM/DD/YYYY'),
+                     moment("1/1/2019").format('MM/DD/YYYY'),
+                     moment("12/25/2018").format('MM/DD/YYYY'),
+                     moment("11/22/2018").format('MM/DD/YYYY')];
     this.timeList = [];
     this.firstFlight = 9;
     this.lastFlight = 16;
@@ -202,7 +204,7 @@ angular.module('workspaceApp')
     var newRes = Object.assign({},res);
     self.newRes = newRes;
     self.newRes.UPDATED = moment(d);
-    self.newRes['DATE TO FLY']=moment(date);
+    self.newRes['DATE TO FLY']=new Date(date);
     self.code.selected = self.email.travelCodes.filter(function ( tc ) {
       return tc.ref === newRes['Ref#'];
     })[0];
@@ -263,6 +265,14 @@ angular.module('workspaceApp')
       return tc.ref === refnum;
     })[0];
     return obj.name;
+  };
+  
+  self.hideKeyboard = function(){
+    $timeout(function(){
+      if (window.cordova && window.cordova.plugins && window.cordova.plugins.Keyboard) {
+        cordova.plugins.Keyboard.close();
+      }
+    },15);
   };
   
   self.timeConvert = function(smfltnum,ref,date){

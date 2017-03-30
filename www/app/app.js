@@ -15,7 +15,6 @@ angular.module('workspaceApp', ['ionic',
                                 'ui.router',
                                 'ui.bootstrap',
                                 'validation.match',
-                                '720kb.datepicker',
                                 'ngTouch',
                                 'angularMoment'
                                 ])

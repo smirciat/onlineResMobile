@@ -2,12 +2,12 @@
   <div class="container">
     <div class="navbar-header">
       
-      <a ui-sref="main" class="navbar-brand"><img class="bear-small" src="assets/images/Bear Paw.jpg" alt="Home"></a>
-      <a class="navbar-brand" ng-hide="nav.isLoggedIn()" ui-sref="signup"><i class="fa fa-user-plus fa-3x" aria-hidden="true"></i></a>
-      <a class="navbar-brand" ng-hide="nav.isLoggedIn()" ui-sref="login"><i class="fa fa-sign-in fa-3x" aria-hidden="true"></i></a>
-      <a class="navbar-brand" ng-show="nav.isLoggedIn()" ui-sref="logout"><i class="fa fa-sign-out fa-3x" aria-hidden="true"></i></a>
-      <a class="navbar-brand" ng-show="nav.isLoggedIn()" ui-sref="settings"><i class="fa fa-cog fa-3x" aria-hidden="true"></i></span></a>
-      <a class="navbar-brand" ng-show="nav.isLoggedIn()" ng-click="main.refresh()"><i class="fa fa-refresh fa-3x" aria-hidden="true"></i></a>
+      <a ui-sref="main" class="navbar-brand"><img class="bear-small" src="assets/images/Bear Paw.jpg" tooltip-placement="bottom" uib-tooltip="Home"></a>
+      <a class="navbar-brand" ng-hide="nav.isLoggedIn()" ui-sref="signup" tooltip-placement="bottom" uib-tooltip="Signup"><i class="fa fa-user-plus fa-3x" aria-hidden="true"></i></a>
+      <a class="navbar-brand" ng-hide="nav.isLoggedIn()" ui-sref="login" tooltip-placement="bottom" uib-tooltip="Login"><i class="fa fa-sign-in fa-3x" aria-hidden="true"></i></a>
+      <a class="navbar-brand" ng-show="nav.isLoggedIn()" ui-sref="logout" tooltip-placement="bottom" uib-tooltip="Logout"><i class="fa fa-sign-out fa-3x" aria-hidden="true"></i></a>
+      <a class="navbar-brand" ng-show="nav.isLoggedIn()" ui-sref="settings" tooltip-placement="bottom" uib-tooltip="Change Password"><i class="fa fa-cog fa-3x" aria-hidden="true"></i></span></a>
+      <a class="navbar-brand" ng-show="nav.isLoggedIn()" ng-click="main.refresh()" tooltip-placement="bottom" uib-tooltip="Refresh Reservations"><i class="fa fa-refresh fa-3x" aria-hidden="true"></i></a>
     </div>
     <div class="navbar-collapse collapse" id="navbar-main">
       <ul class="nav navbar-nav">

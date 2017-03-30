@@ -54,7 +54,7 @@
                 </form>
               </td>
               <td>
-                <ui-select class="mainselectize" ng-model="main.code.selected" theme="selectize" ng-disabled="disabled" ng-change="main.makeList()">
+                <ui-select class="mainselectize" ng-model="main.code.selected" theme="selectize" ng-disabled="disabled" ng-change="main.makeList()"  ng-focus="main.hideKeyboard()" >
                   <ui-select-match placeholder="Choose...">{{$select.selected.name}}</ui-select-match>
                   <ui-select-choices repeat="tc in main.travelCodes" >
                     <div ng-bind-html="tc.name | highlight: $select.search"></div>
@@ -75,15 +75,12 @@
           <tbody>
             <tr>
               <td>
-                  <label class="item item-input">
-                      <input class="form-control" ng-model="main.newRes['DATE TO FLY']" ng-change="main.newDate()" type="date"/>
-                  </label>
-                <!--<datepicker date-format="EEE MMM d, yyyy" date-min-limit="{{main.currDate}}" date-disabled-dates="{{main.disabledDates}}">
-                  <input class="form-control" ng-model="main.newRes['DATE TO FLY']" ng-change="main.makeList()" />
-                </datepicker>-->
+                <label class="item item-input">
+                    <input class="form-control" ng-model="main.newRes['DATE TO FLY']" ng-change="main.newDate()" type="date"/>
+                </label>
               </td>
               <td>
-                <ui-select class="mainselectize" ng-model="main.smfltnum.selected" theme="selectize" ng-disabled="disabled" >
+                <ui-select class="mainselectize" ng-model="main.smfltnum.selected" theme="selectize" ng-disabled="disabled" ng-focus="main.hideKeyboard()">
                   <ui-select-match placeholder="Choose...">{{$select.selected.time}}</ui-select-match>
                   <ui-select-choices repeat="tm in main.timeList" >
                     <div ng-bind-html="tm.time | highlight: $select.search"></div>
