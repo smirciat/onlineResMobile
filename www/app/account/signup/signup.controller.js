@@ -1,13 +1,13 @@
 'use strict';
 
 angular.module('workspaceApp')
-  .controller('SignupController', function (Auth, $state) {
+  .controller('SignupController', function (Auth, $state,Modal) {
     this.user = {};
     this.errors = {};
     this.submitted = false;
     var self =this;
 
-
+  self.quickModal=Modal.confirm.quickMessage();
   this.register = function(form) {
     this.submitted = true;
 
@@ -22,6 +22,7 @@ angular.module('workspaceApp')
         $state.go('main');
       })
       .catch(function(err) {
+        self.quickModal("Error on signup: " + err.data.errors[0].message||"");
         err = err.data;
         self.errors = {};
 
