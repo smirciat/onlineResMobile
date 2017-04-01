@@ -125,12 +125,12 @@ angular.module('workspaceApp')
           text: resEntry, // plaintext body
           html: template(res) // html body
         };
-        $http.post(tcFactory.api + '/api/mails', mailOptions).then(function(response) {
+        $http.post(tcFactory.api + '/api/mails/mobile', mailOptions).then(function(response) {
           //res.status = 500 for fail, 200 for success
           
         },function(response) {
           //this is a failure
-          $http.put(tcFactory.api + '/api/mails', {res:resEntry,uid:user._id}).then(function(response) {
+          $http.put(tcFactory.api + '/api/mails/mobile', {res:resEntry,uid:user._id}).then(function(response) {
             //log an email failure
           });
         });

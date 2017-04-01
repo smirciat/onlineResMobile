@@ -2,8 +2,9 @@
 
 angular.module('workspaceApp')
   .factory('tcFactory', ['$http', function ($http) {
-    //var api = 'https://res-c9-smirciat2.c9users.io';
+    var api = 'https://res-c9-smirciat2.c9users.io';
     var api= 'https://res-sba-backend.herokuapp.com';
+    var api= 'https://reservations-sba.herokuapp.com';
     var months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
     var days = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
     var d = new Date(Date.now());
@@ -30,7 +31,7 @@ angular.module('workspaceApp')
             if(travelCodes) {
                 return callback(travelCodes);
             } else {
-                $http.get('https://res-c9-smirciat2.c9users.io:8080/api/travelCodes').success(function(d) {
+                $http.get(api+ '/api/travelCodes').success(function(d) {
                     travelCodes = d;
                     return callback(d);
                 });
@@ -93,7 +94,7 @@ angular.module('workspaceApp')
                          oldBody2.date.getFullYear()===body.date.getFullYear()&&
                          oldBody2.date.getDate()===body.date.getDate()&&scheduledFlights) return callback(scheduledFlights);
             else {
-                $http.post('https://res-c9-smirciat2.c9users.io:8080/api/scheduledFlights',body).success(function(d) {
+                $http.post(api + '/api/scheduledFlights',body).success(function(d) {
                     oldBody2.date=body.date;
                     return callback(scheduledFlights = d);
                 });

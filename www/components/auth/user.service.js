@@ -4,7 +4,7 @@
 
 function UserResource($resource,tcFactory) {
   var api = tcFactory.api;
-  return $resource(api + '/api/users/:id/:controller', {
+  return $resource(api + '/api/users/mobile/:id/:controller', {
     id: '@_id'
   }, {
     changePassword: {

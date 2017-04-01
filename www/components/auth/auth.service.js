@@ -25,7 +25,7 @@ function AuthService($location, $http, $cookies, $q, appConfig, Util, User,tcFac
      */
     login(user, callback) {
  
-      return $http.post(api + '/auth/local', {
+      return $http.post(api + '/auth/mobile/local', {
         email: user.email,
         password: user.password
       })
