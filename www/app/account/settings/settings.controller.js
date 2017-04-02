@@ -1,13 +1,32 @@
 'use strict';
 
 angular.module('workspaceApp')
-  .controller('SettingsController', function (Auth, $state,Modal) {
+  .controller('SettingsController', function (Auth, $state,$http,Modal,tcFactory) {
   
     this.errors = {};
     this.submitted = false;
     this.quickMessage = Modal.confirm.quickMessage();
+    var api = tcFactory.api;
+    var self = this;
+    this.Auth = Auth;
+    this.$http = $http;
+    this.user = Auth.getCurrentUser();
+    $http.get(api+'/api/userAttributes/mobile/user/' + this.user._id).then(response => {
+      if (response.data.length===0) {
+         this.$http.post(api+'/api/userAttributes/mobile', {uid:this.user._id}).then(response => {
+            this.userAtt = response.data;
+         });
+      }
+      else {
+        this.userAtt = response.data[response.data.length-1];
+      }
+    });
 
-  var self = this;
+  this.changePhone = function() {
+    this.$http.put(api+'/api/userAttributes/mobile/' + this.userAtt._id, this.userAtt).then(function(response) {
+      $state.go('main');
+    });
+  };
 
   this.changePassword = function(form) {
     this.submitted = true;
