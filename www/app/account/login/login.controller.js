@@ -9,7 +9,7 @@ angular.module('workspaceApp')
     var self = this;
     this.user.email = window.localStorage.getItem( 'email' )||"";
     this.user.password = window.localStorage.getItem( 'password' )||"";
-    this.object.checked = window.localStorage.getItem( 'checked' )||'NO';
+    this.object.checked = window.localStorage.getItem( 'checked' )||'YES';//default checked
 
     this.login = function(form) {
       this.submitted = true;
