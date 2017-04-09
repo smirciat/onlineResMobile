@@ -13,13 +13,11 @@ angular.module('workspaceApp')
     this.quickModal=Modal.confirm.quickMessage();
     
     this.lostPassword = function(){
-      $timeout($state.go("login"),100);
       if (this.user.email&&this.user.email!==""){
         email.lostPassword(this.user);
         this.quickModal("Password reset requested.  You should receive an email with password reset information at " +  this.user.email + ".");
       }
       else this.quickModal("Please enter an email address first.");
-      $timeout($state.go("login"),100);
     };
     
     this.login = function(form) {
