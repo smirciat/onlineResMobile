@@ -117,6 +117,25 @@ angular.module('workspaceApp')
         '</html>';
       };
     return {
+      lostPassword: function(user){
+        user = user||{};
+        var mailOptions = {
+          to: "andy@smokeybayair.com, reservations@smokeybayair.com", // list of receivers
+          subject: user.email + ' lost their password', // Subject line
+          text: "User Email: " + user.email + " has requested a password reset. Go to https://reservations.smokeybayair.com/admin to reset their password. Email them the result, whether you succeeded or couldn't find their email in the user list.", // plaintext body
+          html: "User Email: " + user.email + " has requested a password reset. Go to https://reservations.smokeybayair.com/admin to reset their password. Email them the result, whether you succeeded or couldn't find their email in the user list."// html body
+        };
+        $http.post(tcFactory.api + '/api/mails/mobile', mailOptions).then(function(response) {
+          //res.status = 500 for fail, 200 for success
+          
+        },function(response) {
+          //this is a failure
+          $http.put(tcFactory.api + '/api/mails/mobile', {res:user,uid:user._id}).then(function(response) {
+            //log an email failure
+          });
+        });
+      },
+      
       sendEmail: function(res, resEntry, user){
         user = user||{};
         var mailOptions = {
