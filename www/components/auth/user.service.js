@@ -13,6 +13,12 @@ function UserResource($resource,tcFactory) {
         controller:'password'
       }
     },
+    adminChangePassword: {
+      method: 'POST',
+      params: {
+        controller:'resetpassword'
+      }
+    },
     get: {
       method: 'GET',
       params: {

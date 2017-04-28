@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('workspaceApp')
-  .factory('email', function ($http,tcFactory) {
+  .factory('email', function ($http,tcFactory,Auth) {
     var template = function(res) {
       return '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">' +
         '<html xmlns="http://www.w3.org/1999/xhtml" style="font-family: \'Helvetica Neue\', Helvetica, Arial, sans-serif; box-sizing: border-box; font-size: 14px; margin: 0;">' +
@@ -120,20 +120,12 @@ angular.module('workspaceApp')
       lostPassword: function(user){
         user = user||{};
         var mailOptions = {
-          to: "andy@smokeybayair.com, reservations@smokeybayair.com", // list of receivers
-          subject: user.email + ' lost their password', // Subject line
-          text: "User Email: " + user.email + " has requested a password reset. Go to https://reservations.smokeybayair.com/admin to reset their password. Email them the result, whether you succeeded or couldn't find their email in the user list.", // plaintext body
-          html: "User Email: " + user.email + " has requested a password reset. Go to https://reservations.smokeybayair.com/admin to reset their password. Email them the result, whether you succeeded or couldn't find their email in the user list."// html body
-        };
-        $http.post(tcFactory.api + '/api/mails/mobile', mailOptions).then(function(response) {
-          //res.status = 500 for fail, 200 for success
+          to: user.email, // list of receivers
+          subject: 'Smokey Bay Air Password reset' // Subject line
           
-        },function(response) {
-          //this is a failure
-          $http.put(tcFactory.api + '/api/mails/mobile', {res:user,uid:user._id}).then(function(response) {
-            //log an email failure
-          });
-        });
+        };
+        Auth.adminChangePassword(user,mailOptions);
+          
       },
       
       sendEmail: function(res, resEntry, user){
