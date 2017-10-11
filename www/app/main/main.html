@@ -112,6 +112,9 @@
     <table class="table">
       <tbody>
         <tr class="ltblue"><td>Previous</td><td>Reservations</td><td>Below:</td></tr>
+        <tr>
+          <td><input class="block" type="checkbox" ng-change="main.refresh()" ng-model="main.object.checked" ng-true-value="'YES'" ng-false-value="'NO'"/> More History?</td>
+        </tr>
       </tbody>
     </table>
     <div ng-repeat="res in main.resList">

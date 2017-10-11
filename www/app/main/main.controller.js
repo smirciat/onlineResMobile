@@ -3,6 +3,8 @@
 angular.module('workspaceApp')
   .controller('MainController',function($http, $scope, Auth, Modal, $timeout, $location, $ionicPlatform,$cordovaKeyboard,email,tcFactory,moment) {
     this.$http = $http;
+    this.object = {};
+    this.object.checked="NO";
     this.email=email;
     this.Auth = Auth;
     this.$location = $location;
@@ -250,6 +252,7 @@ angular.module('workspaceApp')
         var today = new Date(year,month,day-5);
         return today<=date;
       });
+      if (self.object.checked==="YES") self.resList=response.data;
       self.resList.forEach(function(res){
         self.timeConvert(res.smfltnum,res['Ref#'],res['DATE TO FLY']).then(function(response
                                                                                     ){
