@@ -394,7 +394,7 @@ angular.module('workspaceApp')
             //no more than 8 passengers on any smfltnum to avoid overbooking
             maxPax=8;
             if (scheduledFlights[i].smfltnum===9&&date.getDay()>0&&date.getDay()<6) {
-              maxPax=12;
+              maxPax=8;
             }
             //keep them from being first pax on 8:00 flight
             var enough = (scheduledFlights[i].smfltnum-hour);
