@@ -50,6 +50,7 @@ angular.module('workspaceApp')
       });
     });
     self.add = Modal.confirm.check(function(reservation) {
+      if (reservation.FWeight>0) reservation.baggageWeightEnteredByCustomer=true; 
       self.$http.post(api + '/api/reservations/mobile', reservation).then(function(response) {
             self.sendEmail(self.resObj);
             self.cancelRes();
