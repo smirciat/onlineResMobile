@@ -401,7 +401,7 @@ angular.module('workspaceApp')
             var enough = (scheduledFlights[i].smfltnum-hour);
             if (enough<0) enough+=24;
             //8 am flight limitations
-            if (scheduledFlights[i].smfltnum===8) maxPax=4;
+            if (scheduledFlights[i].smfltnum===8) maxPax=0;
             if (date>=today && date<=tomorrow && enough<13 && scheduledFlights[i].smfltnum===8) maxPax=0;
             
             if (resList.length<maxPax){
