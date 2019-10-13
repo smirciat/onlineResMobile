@@ -6,6 +6,7 @@ angular.module('workspaceApp')
     this.object = {};
     this.object.checked="NO";
     this.email=email;
+    this.moment=moment;
     this.Auth = Auth;
     this.$location = $location;
     this.awesomeThings = [];
@@ -380,6 +381,10 @@ angular.module('workspaceApp')
       self.$http.post(api + '/api/scheduledFlights/mobile',{date:self.newRes['DATE TO FLY']}).then(function(response) {
         var scheduledFlights=response.data;
         self.timeList=[];
+        if (self.moment(self.newRes['DATE TO FLY']).day()<1||self.moment(self.newRes['DATE TO FLY']).day()>5) {
+          self.quickModal("Please call for weekend reservations.  Sorry for the inconvenience.");
+          return;
+        }
         //iterate through list of available flights to see if full or still available
         for (var i=0;i<scheduledFlights.length;i++){
             //initiate the current smfltnum as sm
